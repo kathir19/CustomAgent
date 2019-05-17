@@ -3,7 +3,6 @@
 const winston = require('winston');
 const express = require('express');
 const app = express();
-var envDetails = require('./utils/Config');
 
 var logger = new (winston.Logger)({
   levels : {
