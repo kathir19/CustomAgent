@@ -8,9 +8,8 @@ var crypto = require('crypto');
 var logger = require('winston');
 var nconf = require('nconf');
 var HttpsProxyAgent = require('https-proxy-agent');
-
 var gLogger = require('../utils/GlobalLogger');
-var envDetails = require('../utils/Config');
+
 
 // Export Express 4 style sup-application in order to be embedded in OCCS server-side extension architecture
 var app = module.exports = new express.Router();
@@ -22,21 +21,6 @@ if(proxy){
 	envDetails.proxyAgent = new HttpsProxyAgent(proxy);
 }
 
-if(nconf.get('atg.server.url') ){
-	envDetails.storeUrl = nconf.get('atg.server.url') ;
-}
-if(nconf.get('atg.server.admin.url') ){
-	envDetails.adminUrl = nconf.get('atg.server.admin.url');
-}
-if(nconf.get('atg.application.credentials:atg.application.token') ){
-	envDetails.apiKey = nconf.get('atg.application.credentials:atg.application.token') ;
-}
-if(nconf.get('atg.server.url') ){
-	envDetails.storeUrl = nconf.get('atg.server.url') ;
-}
-if(envDetails.adminUrl){
-	envDetails.hostname = envDetails.adminUrl;
-}
 
 app.use(function(req,res,next){
 	gLogger.setLogger(res.locals.logger);
