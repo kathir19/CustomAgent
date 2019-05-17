@@ -8,7 +8,7 @@ var OccController = {
 
     makeRequest: function(request, callMeBack) {
         console.log("Calling OccController::mkaeRequest()...");
-
+        console.log(" Request : ",JSON.stringify(request));
     let method = request.method;
 
         if(method=='get'){
