@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.ibm.nodejstools.eclipse.npm.LaunchConfigurationType">
+<stringAttribute key="key_command" value="install"/>
+<stringAttribute key="npm.project" value="OCC-ServerSideExtension"/>
+<stringAttribute key="npm.working.dir" value="${workspace_loc:/OCC-ServerSideExtension}"/>
+<stringAttribute key="org.eclipse.debug.ui.ATTR_CONSOLE_ENCODING" value="UTF-8"/>
+</launchConfiguration>
