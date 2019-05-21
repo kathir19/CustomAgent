@@ -17,12 +17,24 @@ module.exports = function (app) {
 	 	authorization: Bearer {}
      */
 	app.get('/v1/search/profiles', function (req, res) {
-		let email = req.query.email;
+		let email = req.query.email || "''";
+		let firstName = req.query.firstName;
+		let lastName = req.query.lastName || "''";
+		let postalCode = req.query.postalCode || "''";
+		let phoneNumber = req.query.phoneNumber || "''";
 		let headerStr = JSON.stringify(req.headers);
 		let headerObj = JSON.parse(headerStr);
 		let accessToken = headerObj.authorization;
-		let search_query_param = '?q={email:' + email + ',limit:20,pageNumber:0,requireCount:false}';
-		console.log("Access Token :" + accessToken);
+
+		//console.log("email:",email,"\n","firstName:",firstName,"\n","lastName:",lastName,"\n","postalCode:",postalCode,"\n","phoneNumber:",phoneNumber);
+		//console.log("Query Param :" + JSON.stringify(req.query));
+
+		let search_query_param = '?q={email:' + email 
+		+',firstName:' + firstName
+		+',lastName:' + lastName
+		+',postalCode:' + postalCode
+		+',phoneNumber:' + phoneNumber+ ',limit:20,pageNumber:0,requireCount:false}';
+		
 		var headers = {
 			'Authorization': accessToken
 		}
