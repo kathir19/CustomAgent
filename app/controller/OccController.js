@@ -7,12 +7,9 @@ var OccController = {
     },
 
     makeRequest: function(request, callMeBack) {
-        console.log("Calling OccController::mkaeRequest()...");
-        console.log(" Request : ",JSON.stringify(request));
-    let method = request.method;
-
-        if(method=='get'){
-
+        console.log("OccController::makeRequest(): Request: ",JSON.stringify(request));
+        let method = request.method;
+        if (method == 'get') {
             occRequest.get(request, function(err, res, body) {
                 if (err) {
                     console.error('error posting json: ', err);
@@ -23,7 +20,7 @@ var OccController = {
                 callMeBack(err, res);
             });
 
-        }else if(method=='post'){
+        } else if (method == 'post') {
 
             occRequest.post(request, function(err, res, body) {
                 if (err) {
