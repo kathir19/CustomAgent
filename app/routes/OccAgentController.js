@@ -7,6 +7,7 @@ var url = require('url');
 const responseGenerator = require('../../utils/ResponseGenerator');
 const host = "https://ccadmin-z0wa.oracleoutsourcing.com";
 const PROFILE_SEARCH_API = "/ccagent/v1/profiles";
+const ORDER_SEARCH_API = "/ccagent/v1/orders";
 
 module.exports = function (app) {
 	'use strict';
@@ -122,4 +123,55 @@ module.exports = function (app) {
 	});
 
 
+
+	app.get('/v1/search/orders', function (req, res) {
+		let orderId = req.query.orderId || "''";
+		let firstName = req.query.firstName || "''";
+		let lastName = req.query.lastName || "''";
+		let state = req.query.status || "''";
+		//let phoneNumber = req.query.phoneNumber || "''";
+		let headerStr = JSON.stringify(req.headers);
+		let headerObj = JSON.parse(headerStr);
+		let accessToken = headerObj.authorization;
+
+		//console.log("email:",email,"\n","firstName:",firstName,"\n","lastName:",lastName,"\n","postalCode:",postalCode,"\n","phoneNumber:",phoneNumber);
+		//console.log("Query Param :" + JSON.stringify(req.query));
+
+		let search_query_param = '?q={orderId:' + orderId 
+		+',firstName:' + firstName
+		+',lastName:' + lastName
+		+',state:' + state
+		//+',phoneNumber:' + phoneNumber
+		+ ',limit:15,pageNumber:0}';
+		
+		var headers = {
+			'Authorization': accessToken
+		}
+
+		var occApiRequest = {
+			method: 'get',
+			json: true,
+			url: host + ORDER_SEARCH_API + search_query_param,
+			headers: headers
+		}
+
+		let callMeBack = function (err, response) {
+			if (err) {
+				logger.debug("OccAgentController::post():Error: ", err);
+				logger.debug("OccAgentController::post():Error: ", response);
+			} else {
+
+				logger.debug("OccAgentController::Order API Res:", JSON.stringify(response));
+
+				var body = response.body;
+				var ordersList = body.ordersList;
+				//console.log("profileList:",JSON.stringify(response));
+				res.status(200).json({
+					"success": "true",
+					"ordersList": ordersList
+				});
+			}
+		}
+		OccController.makeRequest(occApiRequest, callMeBack, function () { });
+	});
 };
